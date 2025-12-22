@@ -16,6 +16,8 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #2684FF;
+    --secondary: #0052CC;
   }
 }
 
@@ -23,4 +25,34 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+.trns{
+  @apply transition-all transition-discrete duration-300;
+}
+.btn{
+  padding: 8px 14px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: small;
+  font-weight: 500;
+}
+.btn-primary{
+  background: var(--primary);
+  color: white;
+}
+.btn-primary:hover{
+  transform: scale(1.03);
+}
+.btn-primary:disabled{
+  background: darkgray;
+}
+.btn-out{
+  border: 1px solid var(--foreground);
+}
+.btn-out:hover{
+  transform: scale(1.03);
+  box-shadow: 2px 2px 8px color-mix(in oklch, var(--color-primary) 20%, transparent);;
+}
+.btn-out:disabled{
+  color: darkgray;
 }
