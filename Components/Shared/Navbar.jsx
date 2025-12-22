@@ -1,12 +1,12 @@
 import Link from "next/link";
 import NavLink from "../NavLink";
 import Image from "next/image";
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 
 export default async function Navbar() {
     const session = await auth()
     return (
-        <header className="bg-(--base-200) text-white w-full">
+        <section className="bg-(--base-200) text-white w-full">
             <nav className="flex items-center justify-between w-11/12 mx-auto py-4 text-sm font-medium">
                 <Link href="/" className="flex gap-2 items-center">
                     <Image src={"/project-plus.svg"} height={40} width={40} style={{ objectFit: "contain" }} alt="Logo" className="" />
@@ -36,6 +36,6 @@ export default async function Navbar() {
                         </div>
                 }
             </nav>
-        </header>
+        </section>
     )
 }
