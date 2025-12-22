@@ -29,7 +29,7 @@ export default function Footer() {
                     </span>
                 </div>
             </footer>
-            <p className="text-xs font-medium text-center">&copy; 2026 copyright | All rights are reserved by Project Pluse</p>
+            <p className="text-xs font-medium text-center">&copy; 2026 copyright | All rights are reserved by Project Pulse</p>
         </section>
     )
 }

@@ -18,6 +18,9 @@
     --foreground: #ededed;
     --primary: #2684FF;
     --secondary: #0052CC;
+    --base-100: #0a0a0f;
+    --base-200: #0a0a1f;
+    --base-300: #0a0a2f;
   }
 }
 
@@ -34,7 +37,7 @@ body {
   border-radius: 3px;
   cursor: pointer;
   font-size: small;
-  font-weight: 500;
+  font-weight: 600;
 }
 .btn-primary{
   background: var(--primary);

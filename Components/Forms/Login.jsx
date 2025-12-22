@@ -1,10 +1,9 @@
 "use client"
-
 import { useForm } from "react-hook-form"
 import '@/Utils/styles/form.css'
 import { signIn } from "next-auth/react"
-import { showToast } from "@/Utils/ShowToast"
 import { useRouter } from "next/navigation"
+import { toast } from "react-toastify"
 
 export default function LoginForm() {
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm()
@@ -16,27 +15,28 @@ export default function LoginForm() {
         password: data.password,
         redirect: false,
       });
+
       if (res?.error) {
-        showToast({ type: "error", msg: "Invalid email or password" });
+        toast.warning("Invalid email or password");
       } else {
-        showToast({ type: "success", msg: "Welcome back!" });
+        toast.success("Welcome back!");
         router.push("/dashboard");
       }
       reset()
     } catch (err) {
       console.error(err)
-
+      toast.error("Something went wrong!")
     }
   };
   return (
     <form onSubmit={handleSubmit(formSubmit)} className="flex flex-col items-center justify-center gap-2 w-full">
       <div className="w-full">
         {errors.email ? <p className="text-sm text-rose-600">{errors.email.message}</p> : <label htmlFor="email">Email :</label>}
-        <input type="email" {...register("email")} placeholder="Enter your email" id="email" />
+        <input type="email" {...register("email", { required: "Email is required" })} placeholder="Enter your email" id="email" />
       </div>
       <div className="w-full">
         {errors.password ? <p className="text-sm text-rose-600">{errors.password.message}</p> : <label htmlFor="password">password :</label>}
-        <input type="password" {...register("password")} placeholder="Enter password" id="password" />
+        <input type="password" {...register("password", { required: "Password is required" })} minLength={8} placeholder="Enter password" id="password" />
       </div>
       <button disabled={isSubmitting} className={`btn trns btn-primary mt-3`}>{isSubmitting ? "Loging in..." : "Login"}</button>
     </form>
