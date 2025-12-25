@@ -1,5 +1,6 @@
 import { auth, signOut } from "@/auth"
 import Image from "next/image"
+import Link from "next/link"
 
 export default async function Dashboard() {
     const session = await auth()
@@ -21,6 +22,16 @@ export default async function Dashboard() {
             >
                 <button className="btn btn-primary trns rounded-md">Log Out</button>
             </form>
+            <section className="flex items-center justify-center gap-2 text-sm font-medium text-(--primary) m-4">
+                {
+                    session?.user?.role === "admin"
+                    &&
+                    <>
+                        <Link href="/create-project">Create Project</Link>
+                        <Link href="/manage-project">Manage Project</Link>
+                    </>
+                }
+            </section>
         </main>
     )
 }

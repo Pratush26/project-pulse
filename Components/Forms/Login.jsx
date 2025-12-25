@@ -21,6 +21,7 @@ export default function LoginForm() {
       } else {
         toast.success("Welcome back!");
         router.push("/dashboard");
+        router.refresh();
       }
       reset()
     } catch (err) {
