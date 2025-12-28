@@ -2,30 +2,24 @@
 import { useForm } from "react-hook-form"
 import '@/Utils/styles/form.css'
 import { toast } from "react-toastify"
+import { createProject } from "@/app/actions/Project"
 
 export default function AddProjectForm() {
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm()
 
   const formSubmit = async (data) => {
     try {
-      const res = await fetch("/api/project", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const res = await createProject(data)
 
-      const result = await res.json();
-      if (res?.ok) {
-        toast.success(result?.message || "Successfully created project")
+      if (res?.success) {
+        toast.success(res?.message || "Successfully created project")
         reset()
       }
-      else toast.error(result?.message || "Failed to create project")
+      else toast.error(res?.message || "Failed to create project")
 
     } catch (err) {
       console.error(err)
-      toast.error("Something went wrong!")
+      toast.error( err?.message || "Something went wrong!")
     }
   };
   return (

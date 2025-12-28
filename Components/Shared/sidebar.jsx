@@ -18,7 +18,7 @@ export default function Sidebar() {
                         <RxHamburgerMenu />
                 }
             </button>
-            <aside className={`absolute ${isOpened ? "translate-x-0" : "translate-x-full"} bottom-0 right-0 translate-y-full bg-(--base-200) flex flex-col justify-center gap-2 trns`}>
+            <aside className={`fixed ${isOpened ? "translate-x-0" : "translate-x-full"} top-16 right-0 bg-(--base-200) flex flex-col justify-center gap-2 trns`}>
                 {
                     session?.user ?
                         <>
@@ -31,7 +31,7 @@ export default function Sidebar() {
                                 session.user?.role === "admin" ?
                                     <>
                                         <SidebarLink href="/create-project">Create Project</SidebarLink>
-                                        <SidebarLink href="/manage-project">Manage Project</SidebarLink>
+                                        <SidebarLink href="/manage-projects">Manage Projects</SidebarLink>
                                         <SidebarLink href="/register">Register</SidebarLink>
                                     </>
                                     :
