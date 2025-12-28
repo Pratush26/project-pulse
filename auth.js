@@ -21,6 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!isPasswordValid) throw new Error("Invalid password");
   
         return {
+          _id: user._id,
           name: user.name,
           email: user.email,
           role: user.role,
@@ -41,6 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const db = await connectDB();
         const dbUser = await db.collection("users").findOne({ email: profile?.email });
         if (!dbUser) return "/register";
+        user._id = dbUser._id;
         user.email = dbUser.email;
         user.name = dbUser.name;
         user.role = dbUser.role;
@@ -51,6 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async jwt({ token, user }) {
       if (user) {
+        token._id = user._id;
         token.name = user.name;
         token.email = user.email;
         token.role = user.role ?? "user";
@@ -60,6 +63,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async session({ session, token }) {
+      session.user._id = token._id;
       session.user.name = token.name;
       session.user.email = token.email;
       session.user.role = token.role;
