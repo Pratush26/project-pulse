@@ -34,7 +34,6 @@ body {
 }
 .btn{
   padding: 8px 14px;
-  border-radius: 3px;
   cursor: pointer;
   font-size: small;
   font-weight: 600;
@@ -54,7 +53,6 @@ body {
 }
 .btn-out:hover{
   transform: scale(1.03);
-  box-shadow: 2px 2px 8px color-mix(in oklch, var(--color-primary) 20%, transparent);;
 }
 .btn-out:disabled{
   color: darkgray;
