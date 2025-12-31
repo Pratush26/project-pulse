@@ -3,6 +3,8 @@ import Link from "next/link"
 import "@/Utils/styles/table.css"
 import UpdateStatusBtn from "@/Components/buttons/UpdateStatus"
 
+export const dynamic = "force-dynamic"
+
 export default async function SubmitTask() {
     const data = await getProjects({ employee: "employee" })
     return (
