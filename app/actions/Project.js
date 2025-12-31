@@ -36,7 +36,6 @@ export async function createProject(data) {
 export async function getProjects(data) {
     try {
         const creater = await requireRole(["admin", "employee", "client"])
-        console.log("creater session", creater)
         const db = await connectDB();
         const Projects = db.collection("projects");
         const query = {}
@@ -88,7 +87,6 @@ export async function assignProject(data) {
                 $addToSet: { employees: new ObjectId(assignedTo) }
             })
         }
-        console.log(user)
         if (!result?.modifiedCount) return { success: false, message: "Failed to assigned" }
         revalidateTag("projects")
         revalidateTag("users")
@@ -125,7 +123,6 @@ export async function updateProjectStatus(data) {
                 }
             }
         });
-        console.log(query)
         if (!result.modifiedCount) return { success: false, message: "Failed to update project status" };
 
         return { success: true, message: "Successfully updated project status" };

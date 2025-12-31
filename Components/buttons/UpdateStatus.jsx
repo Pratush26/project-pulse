@@ -16,7 +16,6 @@ export default function UpdateStatusBtn({ projectId, status }) {
         toast.promise(
             (async () => {
                 const res = await updateProjectStatus({ projectId, status: desiredStatus })
-                console.log(res.message)
                 if (!res.success) throw new Error(res.message)
 
                 return res
