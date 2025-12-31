@@ -19,7 +19,7 @@ export default function AddProjectForm() {
 
     } catch (err) {
       console.error(err)
-      toast.error( err?.message || "Something went wrong!")
+      toast.error(err?.message || "Something went wrong!")
     }
   };
   return (
@@ -40,7 +40,7 @@ export default function AddProjectForm() {
         {errors.endDate ? <p className="text-sm text-rose-600">{errors.endDate.message}</p> : <label htmlFor="endDate">Ending Date :</label>}
         <input type="date" {...register("endDate", { required: "end date is required" })} placeholder="Enter an ending date" id="endDate" />
       </div>
-      <button disabled={isSubmitting} className={`btn trns btn-primary mt-3`}>{isSubmitting ? "Creating..." : "Create"}</button>
+      <button disabled={isSubmitting} className={`btn trns btn-primary mt-3 rounded-md`}>{isSubmitting ? "Creating..." : "Create"}</button>
     </form>
   )
 }

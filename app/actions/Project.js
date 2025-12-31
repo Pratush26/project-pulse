@@ -1,5 +1,4 @@
 "use server"
-import { auth } from "@/auth";
 import { requireRole } from "@/lib/authorize";
 import { connectDB } from "@/lib/connectDB";
 import { ObjectId } from "mongodb";
@@ -36,15 +35,14 @@ export async function createProject(data) {
 
 export async function getProjects(data) {
     try {
-        const session = await auth()
-        if (!session) return []
-
+        const creater = await requireRole(["admin", "employee", "client"])
+        console.log("creater session", creater)
         const db = await connectDB();
         const Projects = db.collection("projects");
         const query = {}
-        if (session.user?.role !== "admin") {
-            if (!!data.client) query.client = new ObjectId(session.user?._id)
-            if (!!data.employee) query.employees = { $in: [new ObjectId(session.user._id)] };
+        if (creater.user?.role !== "admin") {
+            if (!!data.client) query.client = new ObjectId(creater.user?._id)
+            if (!!data.employee) query.employees = { $in: [new ObjectId(creater.user?._id)] };
         }
 
         const res = await Projects.find(query).sort({ createdAt: -1 }).toArray();

@@ -13,7 +13,7 @@ export default async function ManageProjects() {
     const data = await getProjects({})
     return (
         <AssignModalProvider>
-            <main className="w-full">
+            <main className="my-10 w-full">
                 <AssignClientModal/>
                 <AssignEmployeeModal />
                 {

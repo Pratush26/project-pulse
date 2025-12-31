@@ -6,23 +6,19 @@ export default function Home() {
     <main className="w-full">
       <section className="w-11/12 mx-auto py-20 flex flex-col items-center justify-center text-center space-y-6">
         <div className="space-y-4">
-          <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-bold bg-linear-to-b from-(--secondary) to-foreground bg-clip-text text-transparent">
             Project Pulse
           </h1>
-          <p className="text-xl md:text-2xl font-medium text-gray-300 max-w-3xl">
+          <p className="text-xl md:text-2xl font-medium max-w-3xl">
             Real-time project health monitoring platform for IT teams
           </p>
-          <p className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto">
+          <p className="text-gray-500 max-w-2xl mx-auto">
             Track progress, collect client feedback, manage risks, and ensure project success with automated health scoring
           </p>
         </div>
         <div className="flex gap-4 flex-wrap justify-center mt-8">
-          <Link href="/login" className="btn btn-primary trns px-8 py-3 rounded-lg text-base">
-            Get Started
-          </Link>
-          <Link href="/dashboard" className="btn btn-out trns px-8 py-3 rounded-lg text-base">
-            View Dashboard
-          </Link>
+          <Link href="/login" className="btn btn-primary trns rounded-lg">Get Started</Link>
+          <Link href="/dashboard" className="btn btn-out trns rounded-lg">View Dashboard</Link>
         </div>
       </section>
 

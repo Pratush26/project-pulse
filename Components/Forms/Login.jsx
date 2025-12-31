@@ -39,7 +39,7 @@ export default function LoginForm() {
         {errors.password ? <p className="text-sm text-rose-600">{errors.password.message}</p> : <label htmlFor="password">password :</label>}
         <input type="password" {...register("password", { required: "Password is required" })} minLength={8} placeholder="Enter password" id="password" />
       </div>
-      <button disabled={isSubmitting} className={`btn trns btn-primary mt-3`}>{isSubmitting ? "Loging in..." : "Login"}</button>
+      <button disabled={isSubmitting} className={`btn trns btn-primary mt-3 rounded-md`}>{isSubmitting ? "Loging in..." : "Login"}</button>
     </form>
   )
 }

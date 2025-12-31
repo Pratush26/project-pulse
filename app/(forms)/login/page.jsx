@@ -10,7 +10,7 @@ export default async function LoginPage() {
     const session = await auth()
     if(!!session) redirect('/dashboard')
     return (
-        <main className="my-10">
+        <main className="my-10 w-full">
             <h1 className="text-4xl font-semibold text-center m-6">Login</h1>
             <section className="bg-(--base-200) flex flex-col w-1/3 mx-auto items-center gap-2 p-8 rounded-2xl">
                 <LoginForm />
@@ -20,7 +20,7 @@ export default async function LoginPage() {
                         await signIn("google")
                     }}
                 >
-                    <button type="submit" className="trns btn btn-out flex gap-2 items-center"><FcGoogle /> Signin with Google</button>
+                    <button type="submit" className="trns btn btn-out flex gap-2 items-center rounded-md"><FcGoogle /> Signin with Google</button>
                 </form>
                 <p className="text-xs space-x-1">
                     <span>Do not have any account?</span>

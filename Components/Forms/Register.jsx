@@ -63,7 +63,7 @@ export default function RegistrationForm() {
         {errors.address ? <p className="text-sm text-rose-600">{errors.address.message}</p> : <label htmlFor="address">Address :</label>}
         <textarea {...register("address", { required: "Address is required" })} placeholder="Enter your address" id="address" />
       </div>
-      <button disabled={isSubmitting} className={`btn trns btn-primary`}>{isSubmitting ? "Registering..." : "Register"}</button>
+      <button disabled={isSubmitting} className={`btn trns btn-primary rounded-md`}>{isSubmitting ? "Registering..." : "Register"}</button>
     </form>
   )
 }

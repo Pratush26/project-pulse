@@ -42,7 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const db = await connectDB();
         const dbUser = await db.collection("users").findOne({ email: profile?.email });
         if (!dbUser) return "/register";
-        user._id = dbUser._id;
+        user._id = dbUser._id.toString();
         user.email = dbUser.email;
         user.name = dbUser.name;
         user.role = dbUser.role;

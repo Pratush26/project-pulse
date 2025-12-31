@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic"
 export default async function Dashboard() {
     const session = await auth()
     return (
-        <main className="">
+        <main className="my-10 w-full">
             <section className="flex gap-2 items-center justify-center">
                 <Image src={session?.user?.image} height={100} width={100} style={{ objectFit: "cover" }} alt="user image" className="aspect-square rounded-full" />
                 <div className="text-xs font-semibold">

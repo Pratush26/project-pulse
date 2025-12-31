@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic"
 export default async function SubmitTask() {
     const data = await getProjects({ employee: "employee" })
     return (
-        <main>
+        <main className="my-10 w-full">
             {
                 data?.length > 0 ?
                     <table className="table-auto text-center text-sm font-medium border-collapse w-full sm:w-11/12 mx-auto overflow-hidden">
