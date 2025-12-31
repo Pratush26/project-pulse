@@ -1,5 +1,7 @@
 import AddProjectForm from "@/Components/Forms/AddProject";
 
+export const dynamic = "force-dynamic"
+
 export default function CreateProject() {
     return (
         <main className="my-10 w-full">
