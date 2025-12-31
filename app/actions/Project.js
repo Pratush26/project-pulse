@@ -44,14 +44,151 @@ export async function getProjects(data) {
             if (!!data.employee) query.employees = { $in: [new ObjectId(creater.user?._id)] };
         }
 
-        const res = await Projects.find(query).sort({ createdAt: -1 }).toArray();
+        const res = await Projects.aggregate([
+            { $match: query },
+            {
+                $lookup: {
+                    from: "users",
+                    let: { clientId: "$client" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: { $eq: ["$_id", "$$clientId"] }
+                            }
+                        },
+                        {
+                            $project: {
+                                _id: 1,
+                                name: 1,
+                            }
+                        }
+                    ],
+                    as: "clientInfo"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$clientInfo",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            { $project: { clientInfo: 1, employees: 1, title: 1, type: 1, status: 1, createdAt: 1 } },
+            { $sort: { createdAt: -1 } }
+        ]).toArray();
         const result = res.map(project => ({
             ...project,
             _id: project._id.toString(),
-            createdAt: project.createdAt?.toString(),
-            updatedAt: project.updatedAt?.toString(),
-            client: project.client?.toString() || null,
-            employees: project.employees?.map(e => e.toString()) || []
+            clientInfo: project.clientInfo ? { ...project.clientInfo, _id: project.clientInfo._id.toString() } : null,
+            employees: project.employees?.map(emp => emp.toString()),
+        }));
+        return result;
+
+    } catch (err) {
+        console.error("Project creation error: ", err);
+        return []
+    }
+}
+
+export async function getProjectDetails(data) {
+    try {
+        const creater = await requireRole(["admin", "employee", "client"])
+        const db = await connectDB();
+        const Projects = db.collection("projects");
+        const query = {}
+        if (creater.user?.role !== "admin") {
+            if (!!data.client) query.client = new ObjectId(creater.user?._id)
+            if (!!data.employee) query.employees = { $in: [new ObjectId(creater.user?._id)] };
+        }
+
+        const res = await Projects.aggregate([
+            { $match: query },
+            {
+                $lookup: {
+                    from: "users",
+                    let: { creatorId: "$createdBy" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: { $eq: ["$_id", "$$creatorId"] }
+                            }
+                        },
+                        {
+                            $project: {
+                                _id: 1,
+                                name: 1,
+                                email: 1,
+                                photo: 1
+                            }
+                        }
+                    ],
+                    as: "createrInfo"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$createrInfo",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    let: { clientId: "$client" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: { $eq: ["$_id", "$$clientId"] }
+                            }
+                        },
+                        {
+                            $project: {
+                                _id: 1,
+                                name: 1,
+                                email: 1,
+                                photo: 1
+                            }
+                        }
+                    ],
+                    as: "clientInfo"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$clientInfo",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    let: { employeeIds: "$employees" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: { $in: ["$_id", "$$employeeIds"] }
+                            }
+                        },
+                        {
+                            $project: {
+                                _id: 1,
+                                name: 1,
+                                email: 1,
+                                photo: 1
+                            }
+                        }
+                    ],
+                    as: "employeesInfo"
+                }
+            },
+            { $project: { clientInfo: 1, employeesInfo: 1, createrInfo: 1, title: 1, type: 1, description: 1, endDate: 1, status: 1, timeline: 1, createdAt: 1 } },
+            { $sort: { createdAt: -1 } }
+        ]).toArray();
+        const result = res.map(project => ({
+            ...project,
+            _id: project._id.toString(),
+            createrInfo: project.createrInfo ? { ...project.createrInfo, _id: project.createrInfo._id.toString() } : null,
+            clientInfo: project.clientInfo ? { ...project.clientInfo, _id: project.clientInfo._id.toString() } : null,
+            employeesInfo: project.employeesInfo?.map(emp => ({ ...emp, _id: emp._id.toString() })),
         }));
         return result;
 

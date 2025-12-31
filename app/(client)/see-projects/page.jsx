@@ -2,7 +2,6 @@ import { getProjects } from "@/app/actions/Project"
 import Link from "next/link"
 import "@/Utils/styles/table.css"
 import FeedbackModalBtn from "@/Components/buttons/Feedback"
-import FlagProjectBtn from "@/Components/buttons/FlagProject"
 import FeedbackModalProvider from "@/Providers/FeedbackModalProvider"
 import FeedbackForm from "@/Components/Modals/Feedback"
 
@@ -47,7 +46,6 @@ export default async function SeeProjects() {
                                             <td>
                                                 <div className="flex justify-center gap-3 flex-wrap">
                                                     <FeedbackModalBtn projectId={e._id} projectTitle={e.title} />
-                                                    <FlagProjectBtn projectId={e._id} projectTitle={e.title} />
                                                 </div>
                                             </td>
                                         </tr>

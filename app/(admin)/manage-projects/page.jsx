@@ -11,6 +11,7 @@ export const dynamic = "force-dynamic"
 
 export default async function ManageProjects() {
     const data = await getProjects({})
+    console.log(data)
     return (
         <AssignModalProvider>
             <main className="my-10 w-full">
@@ -40,7 +41,7 @@ export default async function ManageProjects() {
                                                 <p className="font-semibold text-sm">{e.title}</p>
                                                 <p>{e.senderPhone}</p>
                                             </td>
-                                            <td>{e.client ?? 0}</td>
+                                            <td>{e.clientInfo?.name ?? 0}</td>
                                             <td>{e.employees?.length}</td>
                                             <td>{new Date(e.createdAt).toDateString()}</td>
                                             <td className="hidden sm:table-cell">
