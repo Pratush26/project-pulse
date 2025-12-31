@@ -1,9 +1,11 @@
 "use server"
+import { requireRole } from "@/lib/authorize";
 import { connectDB } from "@/lib/connectDB";
 import bcrypt from "bcryptjs";
 
 export async function registerUser(data) {
     try {
+        await requireRole(["admin"])
         const db = await connectDB()
         const Users = db.collection("users")
         const exists = await Users.findOne({ email: data?.email })

@@ -10,7 +10,7 @@ import AssignEmployeeModal from "@/Components/Modals/AssignEmployeeModal"
 export const dynamic = "force-dynamic"
 
 export default async function ManageProjects() {
-    const data = await getProjects()
+    const data = await getProjects({})
     return (
         <AssignModalProvider>
             <main className="w-full">
@@ -62,8 +62,8 @@ export default async function ManageProjects() {
                         </table>
                         :
                         <div className="flex flex-col min-h-[80vh] w-full items-center justify-center gap-3">
-                            <p className="text-3xl font-bold text-secondary">No Request Found!</p>
-                            <Link to="/" className="bttn trnsition rounded-sm shadow-md/20">Back to Home</Link>
+                            <p className="text-3xl font-bold text-secondary">No Project Found!</p>
+                            <Link to="/" className="btn trns rounded-sm shadow-md/20">Back to Home</Link>
                         </div>
                 }
             </main>

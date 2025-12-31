@@ -1,4 +1,5 @@
 "use server"
+import { auth } from "@/auth";
 import { requireRole } from "@/lib/authorize";
 import { connectDB } from "@/lib/connectDB";
 import { ObjectId } from "mongodb";
@@ -18,7 +19,7 @@ export async function createProject(data) {
             client: null,
             employees: [],
             status: "pending",
-            createdBy: new ObjectId(creater?._id),
+            createdBy: new ObjectId(creater.user?._id),
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString()
         });
@@ -33,13 +34,20 @@ export async function createProject(data) {
     }
 }
 
-export async function getProjects() {
+export async function getProjects(data) {
     try {
-        const creater = await requireRole(["admin"])
+        const session = await auth()
+        if (!session) return []
+
         const db = await connectDB();
         const Projects = db.collection("projects");
+        const query = {}
+        if (session.user?.role !== "admin") {
+            if (!!data.client) query.client = new ObjectId(session.user?._id)
+            if (!!data.employee) query.employees = { $in: [new ObjectId(session.user._id)] };
+        }
 
-        const res = await Projects.find().sort({ createdAt: -1 }).toArray();
+        const res = await Projects.find(query).sort({ createdAt: -1 }).toArray();
         const result = res.map(project => ({
             ...project,
             _id: project._id.toString(),
@@ -90,5 +98,42 @@ export async function assignProject(data) {
     } catch (err) {
         console.error("Project assigned error: ", err);
         return { success: false, message: "Internal Server Error" }
+    }
+}
+
+export async function updateProjectStatus(data) {
+    try {
+        const creater = await requireRole(["admin", "employee"])
+        const db = await connectDB();
+        const Projects = db.collection("projects");
+        const { projectId, status } = data
+        if (!projectId || !status) return { success: false, message: "Missing of proper data" };
+
+        const query = { _id: new ObjectId(projectId) }
+        if (creater.user?.role !== "admin") query.employees = { $in: [new ObjectId(creater.user?._id)] }
+
+
+        const result = await Projects.updateOne(query, {
+            $set: {
+                status,
+                updatedAt: new Date().toISOString()
+            },
+            $push: {
+                timeline: {
+                    completed: true,
+                    title: `Status - ${status}`,
+                    description: `Successfully updated the project status to ${status} by ${creater.user?.name}`,
+                    createdAt: new Date().toISOString()
+                }
+            }
+        });
+        console.log(query)
+        if (!result.modifiedCount) return { success: false, message: "Failed to update project status" };
+
+        return { success: true, message: "Successfully updated project status" };
+
+    } catch (err) {
+        console.error("Project status update error: ", err);
+        return { success: false, message: "Internal server error!" }
     }
 }
