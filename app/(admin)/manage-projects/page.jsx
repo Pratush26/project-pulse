@@ -7,8 +7,6 @@ import AssignModalProvider from "@/Providers/AssignModalProvider"
 import AssignClientModal from "@/Components/Modals/AssignClientModal"
 import AssignEmployeeModal from "@/Components/Modals/AssignEmployeeModal"
 
-export const dynamic = "force-dynamic"
-
 export default async function ManageProjects() {
     const data = await getProjects({})
     console.log(data)

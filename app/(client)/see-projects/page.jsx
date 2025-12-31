@@ -5,8 +5,6 @@ import FeedbackModalBtn from "@/Components/buttons/Feedback"
 import FeedbackModalProvider from "@/Providers/FeedbackModalProvider"
 import FeedbackForm from "@/Components/Modals/Feedback"
 
-export const dynamic = "force-dynamic"
-
 export default async function SeeProjects() {
     const data = await getProjects({client: "client"})
     return (
