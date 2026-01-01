@@ -94,11 +94,9 @@ export async function getProjectDetails(data) {
         const creater = await requireRole(["admin", "employee", "client"])
         const db = await connectDB();
         const Projects = db.collection("projects");
-        const query = {}
-        if (creater.user?.role !== "admin") {
-            if (!!data.client) query.client = new ObjectId(creater.user?._id)
-            if (!!data.employee) query.employees = { $in: [new ObjectId(creater.user?._id)] };
-        }
+        const query = { _id: new ObjectId(data?._id) }
+        if (creater.user?.role === "client") query.client = new ObjectId(creater.user?._id)
+        else if (creater.user?.role === "employee") query.employees = { $in: [new ObjectId(creater.user?._id)] };
 
         const res = await Projects.aggregate([
             { $match: query },
@@ -190,7 +188,7 @@ export async function getProjectDetails(data) {
             clientInfo: project.clientInfo ? { ...project.clientInfo, _id: project.clientInfo._id.toString() } : null,
             employeesInfo: project.employeesInfo?.map(emp => ({ ...emp, _id: emp._id.toString() })),
         }));
-        return result;
+        return result[0];
 
     } catch (err) {
         console.error("Project creation error: ", err);
