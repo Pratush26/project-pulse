@@ -14,7 +14,6 @@ export default function Footer() {
                 </Link>
                 <div className="flex flex-col gap-2">
                     <Link className="trns hover:text-gray-500 w-fit" href="/">Home</Link>
-                    <Link className="trns hover:text-gray-500 w-fit" href="/all-products">All Products</Link>
                 </div>
                 <div className="flex flex-col gap-2">
                     <Link className="trns hover:text-gray-500" href="/register">Register</Link>

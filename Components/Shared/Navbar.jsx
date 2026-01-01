@@ -13,7 +13,6 @@ export default async function Navbar() {
                 </Link>
                 <div className="space-x-2">
                     <NavLink href="/">Home</NavLink>
-                    <NavLink href="/all-products">All Products</NavLink>
                 </div>
                 <Sidebar />
             </nav>

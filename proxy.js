@@ -13,10 +13,13 @@ export default async function proxy(request) {
         secret: process.env.AUTH_SECRET,
     });
     if (!token) return NextResponse.redirect(new URL('/login', request.url))
+    const userRole = token?.role;
+    console.log("proxy token", token)
+    console.log("proxy role", userRole)
     if (token && pathname === "/login") return NextResponse.redirect(new URL('/dashboard', request.url))
-    if (adminRoutes.includes(pathname) && token?.role === "admin") return NextResponse.next()
-    if (employeeRoutes.includes(pathname) && token?.role === "employee") return NextResponse.next()
-    if (clientRoutes.includes(pathname) && token?.role === "client") return NextResponse.next()
+    if (adminRoutes.includes(pathname) && userRole !== "admin") return NextResponse.redirect(new URL('/dashboard', request.url))
+    if (employeeRoutes.includes(pathname) && userRole !== "employee") return NextResponse.redirect(new URL('/dashboard', request.url))
+    if (clientRoutes.includes(pathname) && userRole !== "client") return NextResponse.redirect(new URL('/dashboard', request.url))
     return NextResponse.next()
 }
 

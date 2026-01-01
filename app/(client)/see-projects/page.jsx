@@ -33,8 +33,7 @@ export default async function SeeProjects() {
                                         <tr key={i} className="border border-gray-(--accent) bg-(--base-200) text-foreground">
                                             <td className="hidden sm:table-cell">{i + 1}</td>
                                             <td className="break-all text-xs">
-                                                <p className="font-semibold text-sm">{e.title}</p>
-                                                <p>{e.senderPhone}</p>
+                                                <Link href={`/project-details/${e._id}`} className="font-semibold text-sm hover:underline">{e.title}</Link>
                                             </td>
                                             <td>{e.employees?.length}</td>
                                             <td>{new Date(e.createdAt).toDateString()}</td>
