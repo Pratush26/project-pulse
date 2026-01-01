@@ -16,8 +16,8 @@ export default function Footer() {
                     <Link className="trns hover:text-gray-500 w-fit" href="/">Home</Link>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <Link className="trns hover:text-gray-500" href="/register">Register</Link>
-                    <Link className="trns hover:text-gray-500" href="/login">Login</Link>
+                    <Link className="trns hover:text-gray-500 w-fit" href="/register">Register</Link>
+                    <Link className="trns hover:text-gray-500 w-fit" href="/login">Login</Link>
                 </div>
                 <div className="flex flex-col gap-2">
                     <h5 className="text-xl font-semibold">Social Links</h5>
