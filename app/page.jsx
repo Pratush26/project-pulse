@@ -220,7 +220,7 @@ export default function Home() {
 
       <section className="bg-(--base-200) py-12">
         <div className="w-11/12 mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-blue-400">100%</div>
               <div className="text-sm text-gray-400 mt-2">Automated Tracking</div>

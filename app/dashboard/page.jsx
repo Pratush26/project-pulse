@@ -1,6 +1,5 @@
 import { auth, signOut } from "@/auth"
 import Image from "next/image"
-import Link from "next/link"
 
 export const dynamic = "force-dynamic"
 
@@ -10,9 +9,9 @@ export default async function Dashboard() {
         <main className="my-10 w-full">
             <section className="flex gap-2 items-center justify-center">
                 <Image src={session?.user?.image} height={100} width={100} style={{ objectFit: "cover" }} alt="user image" className="aspect-square rounded-full" />
-                <div className="text-xs font-semibold">
-                    <p className="text-xl">{session?.user?.name}</p>
-                    <p>{session?.user?.email}</p>
+                <div className="text-xl font-semibold">
+                    <p>{session?.user?.name}</p>
+                    <p className="text-xs text-gray-500">{session?.user?.email}</p>
                 </div>
             </section>
             <form
@@ -24,15 +23,10 @@ export default async function Dashboard() {
             >
                 <button className="btn btn-primary trns rounded-md">Log Out</button>
             </form>
-            <section className="flex items-center justify-center gap-2 text-sm font-medium text-(--primary) m-4">
-                {
-                    session?.user?.role === "admin"
-                    &&
-                    <>
-                        <Link href="/create-project">Create Project</Link>
-                        <Link href="/manage-project">Manage Project</Link>
-                    </>
-                }
+            <section className="flex items-center justify-center gap-2 m-4">
+                <p className="text-sm font-medium bg-(--primary) px-4 py-1 rounded-full">
+                {session?.user?.role}
+                </p>
             </section>
         </main>
     )
